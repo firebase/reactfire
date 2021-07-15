@@ -6,7 +6,7 @@
 
 ## Hierarchy
 
-- [`SignInCheckOptionsBasic`](auth.signincheckoptionsbasic.md)
+- [`SignInCheckOptionsBasic`](auth.SignInCheckOptionsBasic.md)
 
   ↳ **`SignInCheckOptionsClaimsValidator`**
 
@@ -14,12 +14,12 @@
 
 ### Properties
 
-- [forceRefresh](auth.signincheckoptionsclaimsvalidator.md#forcerefresh)
-- [idField](auth.signincheckoptionsclaimsvalidator.md#idfield)
-- [initialData](auth.signincheckoptionsclaimsvalidator.md#initialdata)
-- [startWithValue](auth.signincheckoptionsclaimsvalidator.md#startwithvalue)
-- [suspense](auth.signincheckoptionsclaimsvalidator.md#suspense)
-- [validateCustomClaims](auth.signincheckoptionsclaimsvalidator.md#validatecustomclaims)
+- [forceRefresh](auth.SignInCheckOptionsClaimsValidator.md#forcerefresh)
+- [idField](auth.SignInCheckOptionsClaimsValidator.md#idfield)
+- [initialData](auth.SignInCheckOptionsClaimsValidator.md#initialdata)
+- [startWithValue](auth.SignInCheckOptionsClaimsValidator.md#startwithvalue)
+- [suspense](auth.SignInCheckOptionsClaimsValidator.md#suspense)
+- [validateCustomClaims](auth.SignInCheckOptionsClaimsValidator.md#validatecustomclaims)
 
 ## Properties
 
@@ -29,11 +29,11 @@
 
 #### Inherited from
 
-[SignInCheckOptionsBasic](auth.signincheckoptionsbasic.md).[forceRefresh](auth.signincheckoptionsbasic.md#forcerefresh)
+[SignInCheckOptionsBasic](auth.SignInCheckOptionsBasic.md).[forceRefresh](auth.SignInCheckOptionsBasic.md#forcerefresh)
 
 #### Defined in
 
-[src/auth.tsx:86](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L86)
+[src/auth.tsx:81](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L81)
 
 ___
 
@@ -43,11 +43,11 @@ ___
 
 #### Inherited from
 
-[SignInCheckOptionsBasic](auth.signincheckoptionsbasic.md).[idField](auth.signincheckoptionsbasic.md#idfield)
+[SignInCheckOptionsBasic](auth.SignInCheckOptionsBasic.md).[idField](auth.SignInCheckOptionsBasic.md#idfield)
 
 #### Defined in
 
-[src/index.ts:23](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L23)
+[src/index.ts:25](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L25)
 
 ___
 
@@ -57,11 +57,11 @@ ___
 
 #### Inherited from
 
-[SignInCheckOptionsBasic](auth.signincheckoptionsbasic.md).[initialData](auth.signincheckoptionsbasic.md#initialdata)
+[SignInCheckOptionsBasic](auth.SignInCheckOptionsBasic.md).[initialData](auth.SignInCheckOptionsBasic.md#initialdata)
 
 #### Defined in
 
-[src/index.ts:24](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L24)
+[src/index.ts:26](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L26)
 
 ___
 
@@ -73,11 +73,11 @@ ___
 
 #### Inherited from
 
-[SignInCheckOptionsBasic](auth.signincheckoptionsbasic.md).[startWithValue](auth.signincheckoptionsbasic.md#startwithvalue)
+[SignInCheckOptionsBasic](auth.SignInCheckOptionsBasic.md).[startWithValue](auth.SignInCheckOptionsBasic.md#startwithvalue)
 
 #### Defined in
 
-[src/index.ts:28](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L28)
+[src/index.ts:30](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L30)
 
 ___
 
@@ -87,18 +87,18 @@ ___
 
 #### Inherited from
 
-[SignInCheckOptionsBasic](auth.signincheckoptionsbasic.md).[suspense](auth.signincheckoptionsbasic.md#suspense)
+[SignInCheckOptionsBasic](auth.SignInCheckOptionsBasic.md).[suspense](auth.SignInCheckOptionsBasic.md#suspense)
 
 #### Defined in
 
-[src/index.ts:29](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L29)
+[src/index.ts:31](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L31)
 
 ___
 
 ### validateCustomClaims
 
-• **validateCustomClaims**: [`ClaimsValidator`](auth.claimsvalidator.md)
+• **validateCustomClaims**: [`ClaimsValidator`](auth.ClaimsValidator.md)
 
 #### Defined in
 
-[src/auth.tsx:101](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L101)
+[src/auth.tsx:96](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L96)

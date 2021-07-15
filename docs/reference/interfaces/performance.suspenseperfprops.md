@@ -8,10 +8,9 @@
 
 ### Properties
 
-- [children](performance.suspenseperfprops.md#children)
-- [fallback](performance.suspenseperfprops.md#fallback)
-- [firePerf](performance.suspenseperfprops.md#fireperf)
-- [traceId](performance.suspenseperfprops.md#traceid)
+- [children](performance.SuspensePerfProps.md#children)
+- [fallback](performance.SuspensePerfProps.md#fallback)
+- [traceId](performance.SuspensePerfProps.md#traceid)
 
 ## Properties
 
@@ -21,7 +20,7 @@
 
 #### Defined in
 
-[src/performance.tsx:6](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L6)
+[src/performance.tsx:4](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L4)
 
 ___
 
@@ -31,17 +30,7 @@ ___
 
 #### Defined in
 
-[src/performance.tsx:8](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L8)
-
-___
-
-### firePerf
-
-• `Optional` **firePerf**: `Performance`
-
-#### Defined in
-
-[src/performance.tsx:9](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L9)
+[src/performance.tsx:6](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L6)
 
 ___
 
@@ -51,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/performance.tsx:7](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L7)
+[src/performance.tsx:5](https://github.com/FirebaseExtended/reactfire/blob/main/src/performance.tsx#L5)

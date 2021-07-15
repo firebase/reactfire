@@ -7,10 +7,10 @@ import { ReactFireGlobals, ReactFireOptions } from './';
 const DEFAULT_TIMEOUT = 30_000;
 
 // Since we're side-effect free, we need to ensure our observable cache is global
-const preloadedObservables: Map<string, SuspenseSubject<any>> = ((globalThis as any) as ReactFireGlobals)._reactFirePreloadedObservables || new Map();
+const preloadedObservables: Map<string, SuspenseSubject<any>> = (globalThis as any as ReactFireGlobals)._reactFirePreloadedObservables || new Map();
 
-if (!((globalThis as any) as ReactFireGlobals)._reactFirePreloadedObservables) {
-  ((globalThis as any) as ReactFireGlobals)._reactFirePreloadedObservables = preloadedObservables;
+if (!(globalThis as any as ReactFireGlobals)._reactFirePreloadedObservables) {
+  (globalThis as any as ReactFireGlobals)._reactFirePreloadedObservables = preloadedObservables;
 }
 
 // Starts listening to an Observable.
@@ -63,7 +63,7 @@ export interface ObservableStatus<T> {
   firstValuePromise: Promise<void>;
 }
 
-export function useObservable<T>(observableId: string, source: Observable<T | any>, config: ReactFireOptions = {}): ObservableStatus<T> {
+export function useObservable<T = unknown>(observableId: string, source: Observable<T>, config: ReactFireOptions = {}): ObservableStatus<T> {
   if (!observableId) {
     throw new Error('cannot call useObservable without an observableId');
   }
@@ -82,16 +82,16 @@ export function useObservable<T>(observableId: string, source: Observable<T | an
   const [hasError, setHasError] = React.useState(false);
   React.useEffect(() => {
     const subscription = observable.subscribe({
-      next: v => {
+      next: (v) => {
         setValue(() => v);
       },
-      error: e => {
+      error: (e) => {
         setHasError(true);
         throw e;
       },
       complete: () => {
         setIsComplete(true);
-      }
+      },
     });
     return () => subscription.unsubscribe();
   }, [observable]);
@@ -112,6 +112,6 @@ export function useObservable<T>(observableId: string, source: Observable<T | an
     isComplete: isComplete,
     data: latest,
     error: observable.ourError,
-    firstValuePromise: observable.firstEmission
+    firstValuePromise: observable.firstEmission,
   };
 }

@@ -191,7 +191,7 @@ describe('useObservable', () => {
 
       expect(result.current.data).toEqual(startVal);
 
-      values.forEach(value => {
+      values.forEach((value) => {
         actOnHook(() => observable$.next(value));
         expect(result.current.data).toEqual(value);
       });

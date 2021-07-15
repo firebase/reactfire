@@ -6,23 +6,23 @@
 
 ## Hierarchy
 
-- [`ReactFireOptions`](index.reactfireoptions.md)<[`SigninCheckResult`](../modules/auth.md#signincheckresult)\>
+- [`ReactFireOptions`](index.ReactFireOptions.md)<[`SigninCheckResult`](../modules/auth.md#signincheckresult)\>
 
   ↳ **`SignInCheckOptionsBasic`**
 
-  ↳↳ [`SignInCheckOptionsClaimsObject`](auth.signincheckoptionsclaimsobject.md)
+  ↳↳ [`SignInCheckOptionsClaimsObject`](auth.SignInCheckOptionsClaimsObject.md)
 
-  ↳↳ [`SignInCheckOptionsClaimsValidator`](auth.signincheckoptionsclaimsvalidator.md)
+  ↳↳ [`SignInCheckOptionsClaimsValidator`](auth.SignInCheckOptionsClaimsValidator.md)
 
 ## Table of contents
 
 ### Properties
 
-- [forceRefresh](auth.signincheckoptionsbasic.md#forcerefresh)
-- [idField](auth.signincheckoptionsbasic.md#idfield)
-- [initialData](auth.signincheckoptionsbasic.md#initialdata)
-- [startWithValue](auth.signincheckoptionsbasic.md#startwithvalue)
-- [suspense](auth.signincheckoptionsbasic.md#suspense)
+- [forceRefresh](auth.SignInCheckOptionsBasic.md#forcerefresh)
+- [idField](auth.SignInCheckOptionsBasic.md#idfield)
+- [initialData](auth.SignInCheckOptionsBasic.md#initialdata)
+- [startWithValue](auth.SignInCheckOptionsBasic.md#startwithvalue)
+- [suspense](auth.SignInCheckOptionsBasic.md#suspense)
 
 ## Properties
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[src/auth.tsx:86](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L86)
+[src/auth.tsx:81](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L81)
 
 ___
 
@@ -42,11 +42,11 @@ ___
 
 #### Inherited from
 
-[ReactFireOptions](index.reactfireoptions.md).[idField](index.reactfireoptions.md#idfield)
+[ReactFireOptions](index.ReactFireOptions.md).[idField](index.ReactFireOptions.md#idfield)
 
 #### Defined in
 
-[src/index.ts:23](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L23)
+[src/index.ts:25](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L25)
 
 ___
 
@@ -56,11 +56,11 @@ ___
 
 #### Inherited from
 
-[ReactFireOptions](index.reactfireoptions.md).[initialData](index.reactfireoptions.md#initialdata)
+[ReactFireOptions](index.ReactFireOptions.md).[initialData](index.ReactFireOptions.md#initialdata)
 
 #### Defined in
 
-[src/index.ts:24](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L24)
+[src/index.ts:26](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L26)
 
 ___
 
@@ -72,11 +72,11 @@ ___
 
 #### Inherited from
 
-[ReactFireOptions](index.reactfireoptions.md).[startWithValue](index.reactfireoptions.md#startwithvalue)
+[ReactFireOptions](index.ReactFireOptions.md).[startWithValue](index.ReactFireOptions.md#startwithvalue)
 
 #### Defined in
 
-[src/index.ts:28](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L28)
+[src/index.ts:30](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L30)
 
 ___
 
@@ -86,8 +86,8 @@ ___
 
 #### Inherited from
 
-[ReactFireOptions](index.reactfireoptions.md).[suspense](index.reactfireoptions.md#suspense)
+[ReactFireOptions](index.ReactFireOptions.md).[suspense](index.ReactFireOptions.md#suspense)
 
 #### Defined in
 
-[src/index.ts:29](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L29)
+[src/index.ts:31](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L31)

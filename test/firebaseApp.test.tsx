@@ -1,6 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import firebase from 'firebase/app';
+import { initializeApp, deleteApp, getApps } from 'firebase/app';
 import '@testing-library/jest-dom/extend-expect';
 import * as React from 'react';
 import { useFirebaseApp, FirebaseAppProvider, version } from '..';
@@ -9,41 +9,35 @@ const pkg = require('../package.json');
 afterEach(() => {
   cleanup();
 
-  // clean up the initialized firebase app so each test starts fresh
-  try {
-    firebase.app().delete();
-  } catch (e) {
-    // swallow the error - if the default app wasn't initialized in a test, app().delete() will throw
-  }
+  getApps().forEach(deleteApp);
 });
 
 const DEFAULT_APP_CONFIG = { appId: '12345' };
 
 describe('FirebaseAppProvider', () => {
-  it('calls firebase.initializeApp with the provided config', () => {
-    const spy = jest.spyOn(firebase, 'initializeApp');
+  it('Initializes an app when passed a config as props', () => {
+    expect(getApps()).toHaveLength(0);
 
     render(<FirebaseAppProvider firebaseConfig={DEFAULT_APP_CONFIG} />);
-    expect(spy).toBeCalledWith(DEFAULT_APP_CONFIG, undefined);
 
-    spy.mockRestore();
+    expect(getApps()).toHaveLength(1);
   });
 
-  it('does not call firebase.initializeApp if the firebaseApp is provided', () => {
-    const spy = jest.spyOn(firebase, 'initializeApp');
-    const app: firebase.app.App = {} as any;
-    render(<FirebaseAppProvider firebaseApp={app} />);
-    expect(spy).not.toBeCalled();
+  it('Does not initialize a new app if the firebaseApp is provided', () => {
+    const app = initializeApp(DEFAULT_APP_CONFIG, 'test');
+    expect(getApps()).toHaveLength(1);
 
-    spy.mockRestore();
+    render(<FirebaseAppProvider firebaseApp={app} />);
+
+    expect(getApps()).toHaveLength(1);
   });
 });
 
 describe('useFirebaseApp', () => {
   it('finds firebase from Context', () => {
-    const firebaseApp: firebase.app.App = { a: 1 } as any;
+    const firebaseApp = initializeApp(DEFAULT_APP_CONFIG, 'context-test');
 
-    const wrapper = ({ children }: { children: React.ReactNode }) => <FirebaseAppProvider firebaseApp={firebaseApp}>{children}</FirebaseAppProvider>;
+    const wrapper: React.FunctionComponent = ({ children }) => <FirebaseAppProvider firebaseApp={firebaseApp}>{children}</FirebaseAppProvider>;
 
     const { result } = renderHook(() => useFirebaseApp(), { wrapper });
     expect(result.error).toBeUndefined();
@@ -51,13 +45,13 @@ describe('useFirebaseApp', () => {
   });
 
   it('can initialize more than one firebase app', () => {
-    const config = { a: 1 };
-
-    const initializeApp = jest.spyOn(firebase, 'initializeApp');
+    const config = { appId: 'another-firebase-app' };
 
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <div>
-        <FirebaseAppProvider firebaseConfig={DEFAULT_APP_CONFIG}>{children}</FirebaseAppProvider>
+        <FirebaseAppProvider firebaseConfig={DEFAULT_APP_CONFIG} appName="app-1">
+          {children}
+        </FirebaseAppProvider>
         <FirebaseAppProvider firebaseConfig={config} appName="app-2">
           appA
         </FirebaseAppProvider>
@@ -65,17 +59,13 @@ describe('useFirebaseApp', () => {
     );
 
     const { result } = renderHook(() => useFirebaseApp(), { wrapper });
+    expect(result.current.name).toEqual('app-1');
 
-    expect(initializeApp).toBeCalledWith(config, 'app-2');
-    initializeApp.mockRestore();
-
-    expect(result.error).toBeUndefined();
+    expect(getApps()).toHaveLength(2);
   });
 
   it('will throw if configs dont match, and same name', () => {
-    const config = { a: 1 };
-
-    const initializeApp = jest.spyOn(firebase, 'initializeApp');
+    const config = { appId: 'a-different-config' };
 
     // stop a nasty-looking console error
     // https://github.com/facebook/react/issues/11098#issuecomment-523977830
@@ -95,11 +85,8 @@ describe('useFirebaseApp', () => {
       'Does not match the options already provided to the default firebase app instance, give this new instance a different appName.'
     );
 
-    // initializeApp should be called the first time, but not the second time
-    expect(initializeApp).toBeCalledTimes(1);
-    expect(initializeApp).toBeCalledWith(DEFAULT_APP_CONFIG, undefined);
+    expect(getApps()).toHaveLength(1);
 
-    initializeApp.mockRestore();
     errorLog.mockRestore();
   });
 

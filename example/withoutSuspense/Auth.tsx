@@ -1,11 +1,16 @@
 import * as React from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useAuth, useSigninCheck } from 'reactfire';
 import { WideButton } from '../display/Button';
 import { CardSection } from '../display/Card';
 import { LoadingSpinner } from '../display/LoadingSpinner';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const signOut = auth => auth.signOut().then(() => console.log('signed out'));
+const signIn = async auth => {
+  const provider = new GoogleAuthProvider();
+
+  await signInWithPopup(auth, provider);
+}
 
 export const AuthWrapper = ({ children, fallback }: React.PropsWithChildren<{ fallback: JSX.Element }>): JSX.Element => {
   const { status, data: signInCheckResult } = useSigninCheck();
@@ -43,20 +48,11 @@ const UserDetails = ({ user }) => {
 };
 
 const SignInForm = () => {
-  const auth = useAuth;
-
-  const uiConfig = {
-    signInFlow: 'popup',
-    signInOptions: [auth.GoogleAuthProvider.PROVIDER_ID],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: () => false
-    }
-  };
+  const auth = useAuth();
 
   return (
     <CardSection title="Sign-in form">
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth()} />
+      <WideButton label="Sign in with Google" onClick={() => signIn(auth)} />
     </CardSection>
   );
 };

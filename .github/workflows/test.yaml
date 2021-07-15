@@ -109,8 +109,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Publish (NPM)
-    needs: test
-    if: ${{ github.ref == 'refs/heads/main' || github.event_name == 'release' }}
+    needs: build
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/modular-firebase' || github.event_name == 'release' }}
     steps:
       - name: Setup node
         uses: actions/setup-node@v2-beta

@@ -1,20 +1,13 @@
 import * as React from 'react';
-import { preloadPerformance } from './';
-import { useFirebaseApp } from './firebaseApp';
 
 export interface SuspensePerfProps {
   children: React.ReactNode;
   traceId: string;
   fallback: React.ReactNode;
-  firePerf?: import('firebase/app').default.performance.Performance;
 }
 
-export function SuspenseWithPerf({ children, traceId, fallback, firePerf }: SuspensePerfProps): JSX.Element {
-  const firebaseApp = useFirebaseApp();
-
-  if (!firePerf) {
-    preloadPerformance({ firebaseApp }).then(perf => perf());
-  }
+export function SuspenseWithPerf({ children, traceId, fallback }: SuspensePerfProps): JSX.Element {
+  // TODO: Should this import firebase/performance?
 
   const entries = performance?.getEntriesByName?.(traceId, 'measure') || [];
   const startMarkName = `_${traceId}Start[${entries.length}]`;

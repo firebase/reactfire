@@ -1,138 +1,119 @@
-import { render, waitFor, cleanup, act } from '@testing-library/react';
+import { renderHook, act as hooksAct, cleanup as hooksCleanup } from '@testing-library/react-hooks';
 import * as React from 'react';
-import firebase from 'firebase';
-import { useDatabaseObject, useDatabaseList, FirebaseAppProvider, ObservableStatus } from '..';
-import { QueryChange } from 'rxfire/database';
+import { useDatabaseObject, useDatabaseList, FirebaseAppProvider, DatabaseProvider, ObservableStatus } from '..';
 import { baseConfig } from './appConfig';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, useDatabaseEmulator, ref, set, push, query, orderByChild, equalTo, get } from 'firebase/database';
+import { QueryChange } from 'rxfire/database';
+import { randomString } from './test-utils';
 
 describe('Realtime Database (RTDB)', () => {
-  let app: firebase.app.App;
+  const app = initializeApp(baseConfig);
+  const database = getDatabase(app);
+  useDatabaseEmulator(database, 'localhost', 9000);
 
-  beforeAll(async () => {
-    app = firebase.initializeApp(baseConfig);
-    app.database().useEmulator('localhost', 9000);
-  });
+  const Provider: React.FunctionComponent = ({ children }) => (
+    <FirebaseAppProvider firebaseApp={app}>
+      <DatabaseProvider sdk={database}>{children}</DatabaseProvider>
+    </FirebaseAppProvider>
+  );
 
   afterEach(async () => {
-    cleanup();
+    hooksCleanup();
 
     // clear out the database
-    app
-      .database()
-      .ref()
-      .set(null);
+    await set(ref(database), null);
   });
 
-  test('double check - emulator is running', () => {
+  test('double check - emulator is running', async () => {
     // IF THIS TEST FAILS, MAKE SURE YOU'RE RUNNING THESE TESTS BY DOING:
     // yarn test
 
-    return app
-      .database()
-      .ref('hello')
-      .set({ a: 'world' });
+    const testData = { a: 'world' };
+    const testRef = ref(database, randomString());
+    await set(testRef, testData);
+    const dataFromEmulator = await get(testRef);
+    expect(dataFromEmulator.val()).toEqual(testData);
   });
 
   describe('useDatabaseObject', () => {
-    it('can get an object [TEST REQUIRES EMULATOR]', async () => {
+    it('can get an object', async () => {
       const mockData = { a: 'hello' };
+      const objectRef = ref(database, randomString());
+      await set(objectRef, mockData);
 
-      const ref = app.database().ref('hello');
+      const { result, waitFor } = renderHook(() => useDatabaseObject<QueryChange>(objectRef), { wrapper: Provider });
 
-      await ref.set(mockData);
+      await hooksAct(() => waitFor(() => result.current.status === 'success'));
 
-      // await ref.once('value');
+      expect(result.current.data.snapshot.val()).toEqual(mockData);
+    });
 
-      const ReadObject = () => {
-        const { data } = useDatabaseObject(ref);
-        const { snapshot } = data as QueryChange;
+    it('updates with new values as they change', async () => {
+      // set up a ref and give it a value
+      const dataRef = ref(database, randomString());
+      const initialValue = randomString();
+      await set(dataRef, initialValue);
 
-        return <h1 data-testid="readSuccess">{snapshot.val().a}</h1>;
-      };
+      // warm up the hook
+      const { result, waitFor } = renderHook(() => useDatabaseObject<QueryChange>(dataRef), { wrapper: Provider });
+      await hooksAct(() => waitFor(() => result.current.status === 'success'));
 
-      const { getByTestId } = render(
-        <FirebaseAppProvider firebaseApp={app} suspense={true}>
-          <React.Suspense fallback={<h1 data-testid="fallback">Fallback</h1>}>
-            <ReadObject />
-          </React.Suspense>
-        </FirebaseAppProvider>
-      );
+      // update the value a few times
+      const values = [randomString(), randomString(), randomString(), randomString()];
+      const updates = values.map(async (newValue) => {
+        return set(dataRef, newValue);
+      });
+      await hooksAct(async () => {
+        await Promise.all(updates);
+      });
 
-      await waitFor(() => getByTestId('readSuccess'));
-
-      expect(getByTestId('readSuccess')).toContainHTML(mockData.a);
+      // make sure every value was emitted
+      const resultValues = result.all
+        .filter((observableStatus) => (observableStatus as ObservableStatus<QueryChange>).status === 'success')
+        .map((observableStatus) => (observableStatus as ObservableStatus<QueryChange>).data.snapshot.val());
+      expect(resultValues).toEqual([initialValue, ...values]);
     });
   });
 
   describe('useDatabaseList', () => {
-    it('can get a list [TEST REQUIRES EMULATOR]', async () => {
+    it('can get a list', async () => {
       const mockData1 = { a: 'hello' };
       const mockData2 = { a: 'goodbye' };
 
-      const ref = app.database().ref('myList');
+      const listRef = ref(database, randomString());
 
-      await act(() => ref.push(mockData1).then());
-      await act(() => ref.push(mockData2).then());
+      await hooksAct(() => push(listRef, mockData1).then());
+      await hooksAct(() => push(listRef, mockData2).then());
 
-      const ReadList = () => {
-        const { data: changes } = useDatabaseList(ref) as ObservableStatus<QueryChange[]>;
+      const { result, waitFor } = renderHook(() => useDatabaseList<QueryChange>(listRef), { wrapper: Provider });
 
-        return (
-          <ul data-testid="readSuccess">
-            {changes.map(({ snapshot }) => (
-              <li key={snapshot.key} data-testid="listItem">
-                {snapshot.val().a}
-              </li>
-            ))}
-          </ul>
-        );
-      };
+      await hooksAct(() => waitFor(() => result.current.status === 'success'));
 
-      const { getAllByTestId } = render(
-        <FirebaseAppProvider firebaseApp={app} suspense={true}>
-          <React.Suspense fallback={<h1 data-testid="fallback">Fallback</h1>}>
-            <ReadList />
-          </React.Suspense>
-        </FirebaseAppProvider>
-      );
+      expect(result.current.data.length).toEqual(2);
+      const values = result.current.data.map((queryChange) => queryChange.snapshot.val());
 
-      await waitFor(() => getAllByTestId('listItem'));
-
-      expect(getAllByTestId('listItem').length).toEqual(2);
+      expect(values).toEqual([mockData1, mockData2]);
     });
 
-    it('Returns different data for different queries on the same path [TEST REQUIRES EMULATOR]', async () => {
+    it('Returns different data for different queries on the same path', async () => {
       const mockData1 = { a: 'hello' };
       const mockData2 = { a: 'goodbye' };
 
-      const ref = app.database().ref('items');
-      const filteredRef = ref.orderByChild('a').equalTo('hello');
+      // have to use this path because because emulator checks for `.indexon`
+      const itemsRef = ref(database, 'items');
+      const filteredItemsRef = query(itemsRef, orderByChild('a'), equalTo('hello'));
 
-      await act(() => ref.push(mockData1).then());
-      await act(() => ref.push(mockData2).then());
+      await hooksAct(() => push(itemsRef, mockData1).then());
+      await hooksAct(() => push(itemsRef, mockData2).then());
 
-      const ReadFirestoreCollection = () => {
-        const { data: list } = useDatabaseList(ref, { suspense: true }) as ObservableStatus<QueryChange[]>;
-        const { data: filteredList } = useDatabaseList(filteredRef, { suspense: true }) as ObservableStatus<QueryChange[]>;
+      const { result: unfilteredResult, waitFor } = renderHook(() => useDatabaseList(itemsRef), { wrapper: Provider });
+      const { result: filteredResult } = renderHook(() => useDatabaseList(filteredItemsRef), { wrapper: Provider });
 
-        // filteredList's length should be 1 since we only added one value that matches its query
-        expect(filteredList.length).toEqual(1);
+      await hooksAct(() => waitFor(() => unfilteredResult.current.status === 'success' && filteredResult.current.status === 'success'));
 
-        // the full list should be bigger than the filtered list
-        expect(list.length).toBeGreaterThan(filteredList.length);
-
-        return <h1 data-testid="rendered">Hello</h1>;
-      };
-
-      const { getByTestId } = render(
-        <FirebaseAppProvider firebaseApp={app} suspense={true}>
-          <React.Suspense fallback={<h1 data-testid="fallback">Fallback</h1>}>
-            <ReadFirestoreCollection />
-          </React.Suspense>
-        </FirebaseAppProvider>
-      );
-
-      await waitFor(() => getByTestId('rendered'));
+      expect(filteredResult.current.data.length).toEqual(1);
+      expect(unfilteredResult.current.data.length).toBeGreaterThan(filteredResult.current.data.length);
     });
   });
 });

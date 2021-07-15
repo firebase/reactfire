@@ -8,10 +8,10 @@
 
 ### Properties
 
-- [children](auth.claimscheckprops.md#children)
-- [fallback](auth.claimscheckprops.md#fallback)
-- [requiredClaims](auth.claimscheckprops.md#requiredclaims)
-- [user](auth.claimscheckprops.md#user)
+- [children](auth.ClaimsCheckProps.md#children)
+- [fallback](auth.ClaimsCheckProps.md#fallback)
+- [requiredClaims](auth.ClaimsCheckProps.md#requiredclaims)
+- [user](auth.ClaimsCheckProps.md#user)
 
 ## Properties
 
@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/auth.tsx:63](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L63)
+[src/auth.tsx:58](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L58)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/auth.tsx:62](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L62)
+[src/auth.tsx:57](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L57)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 #### Defined in
 
-[src/auth.tsx:64](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L64)
+[src/auth.tsx:59](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L59)
 
 ___
 
@@ -55,4 +55,4 @@ ___
 
 #### Defined in
 
-[src/auth.tsx:61](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L61)
+[src/auth.tsx:56](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L56)

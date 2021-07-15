@@ -28,13 +28,13 @@
 
 #### Defined in
 
-[src/storage.tsx:102](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L102)
+[src/storage.tsx:100](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L100)
 
 ___
 
 ### useStorageDownloadURL
 
-▸ **useStorageDownloadURL**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`string` \| `T`\>
+▸ **useStorageDownloadURL**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`string` \| `T`\>
 
 Subscribe to a storage ref's download URL
 
@@ -48,22 +48,22 @@ Subscribe to a storage ref's download URL
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `ref` | `firebase.storage.Reference` | reference to the blob you want to download |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`\> |  |
+| `ref` | `StorageReference` | reference to the blob you want to download |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`\> |  |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`string` \| `T`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`string` \| `T`\>
 
 #### Defined in
 
-[src/storage.tsx:53](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L53)
+[src/storage.tsx:51](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L51)
 
 ___
 
 ### useStorageTask
 
-▸ **useStorageTask**<`T`\>(`task`, `ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.storage.UploadTaskSnapshot` \| `T`\>
+▸ **useStorageTask**<`T`\>(`task`, `ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`UploadTaskSnapshot` \| `T`\>
 
 Subscribe to the progress of a storage task
 
@@ -77,14 +77,14 @@ Subscribe to the progress of a storage task
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `task` | `firebase.storage.UploadTask` | the task you want to listen to |
-| `ref` | `firebase.storage.Reference` | reference to the blob the task is acting on |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`\> |  |
+| `task` | `UploadTask` | the task you want to listen to |
+| `ref` | `StorageReference` | reference to the blob the task is acting on |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`\> |  |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.storage.UploadTaskSnapshot` \| `T`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`UploadTaskSnapshot` \| `T`\>
 
 #### Defined in
 
-[src/storage.tsx:36](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L36)
+[src/storage.tsx:38](https://github.com/FirebaseExtended/reactfire/blob/main/src/storage.tsx#L38)

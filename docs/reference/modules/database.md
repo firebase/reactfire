@@ -15,7 +15,7 @@
 
 ### useDatabaseList
 
-▸ **useDatabaseList**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`QueryChange`[] \| `T`[]\>
+▸ **useDatabaseList**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`QueryChange`[] \| `T`[]\>
 
 Subscribe to a Realtime Database list
 
@@ -29,22 +29,22 @@ Subscribe to a Realtime Database list
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `ref` | `firebase.database.Reference` \| `firebase.database.Query` | Reference to the DB List you want to listen to |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`[]\> |  |
+| `ref` | `Reference` \| `DatabaseQuery` | Reference to the DB List you want to listen to |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`[]\> |  |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`QueryChange`[] \| `T`[]\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`QueryChange`[] \| `T`[]\>
 
 #### Defined in
 
-[src/database.tsx:73](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L73)
+[src/database.tsx:74](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L74)
 
 ___
 
 ### useDatabaseListData
 
-▸ **useDatabaseListData**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`[]\>
+▸ **useDatabaseListData**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`[] \| ``null``\>
 
 #### Type parameters
 
@@ -56,22 +56,22 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `ref` | `firebase.database.Reference` \| `firebase.database.Query` |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`[]\> |
+| `ref` | `Reference` \| `DatabaseQuery` |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`[]\> |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`[]\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`[] \| ``null``\>
 
 #### Defined in
 
-[src/database.tsx:83](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L83)
+[src/database.tsx:84](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L84)
 
 ___
 
 ### useDatabaseObject
 
-▸ **useDatabaseObject**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`QueryChange` \| `T`\>
+▸ **useDatabaseObject**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`QueryChange` \| `T`\>
 
 Subscribe to a Realtime Database object
 
@@ -85,22 +85,22 @@ Subscribe to a Realtime Database object
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `ref` | `firebase.database.Reference` | Reference to the DB object you want to listen to |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`\> |  |
+| `ref` | `Reference` | Reference to the DB object you want to listen to |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`\> |  |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`QueryChange` \| `T`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`QueryChange` \| `T`\>
 
 #### Defined in
 
-[src/database.tsx:29](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L29)
+[src/database.tsx:30](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L30)
 
 ___
 
 ### useDatabaseObjectData
 
-▸ **useDatabaseObjectData**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`\>
+▸ **useDatabaseObjectData**<`T`\>(`ref`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`\>
 
 #### Type parameters
 
@@ -112,13 +112,13 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `ref` | `firebase.database.Reference` |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`\> |
+| `ref` | `Reference` |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`\> |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`\>
 
 #### Defined in
 
-[src/database.tsx:59](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L59)
+[src/database.tsx:60](https://github.com/FirebaseExtended/reactfire/blob/main/src/database.tsx#L60)

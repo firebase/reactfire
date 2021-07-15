@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0",
+  "version": "4.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -14,10 +14,11 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test:tsdx": "tsdx test",
-    "test": "firebase emulators:exec --only firestore,database,auth --project rxfire-525a3 \"tsdx test\"",
+    "test": "firebase emulators:exec --only firestore,database,auth,storage --project rxfire-525a3 \"tsdx test\"",
     "test:firestore": "firebase emulators:exec --only firestore --project rxfire-525a3 \"tsdx test firestore --verbose\"",
     "test:database": "firebase emulators:exec --only database --project rxfire-525a3 \"tsdx test database --verbose\"",
     "test:auth": "firebase emulators:exec --only auth --project rxfire-525a3 \"tsdx test auth --verbose\"",
+    "test:storage": "firebase emulators:exec --only storage --project rxfire-525a3 \"tsdx test storage --verbose\"",
     "test:useObservable": "tsdx test useObservable --verbose",
     "lint": "tsdx lint src test",
     "size": "size-limit",
@@ -25,7 +26,7 @@
     "docs": "typedoc --options typedoc.json"
   },
   "peerDependencies": {
-    "firebase": "^8.1.1",
+    "firebase": "9.0.0-beta.6",
     "react": ">=16 || experimental"
   },
   "husky": {
@@ -80,9 +81,8 @@
     "babel-jest": "^26.6.3",
     "babel-plugin-minify-replace": "^0.5.0",
     "eslint-plugin-no-only-tests": "^2.6.0",
-    "firebase": "^8.1.1",
-    "firebase-admin": "^9.7.0",
-    "firebase-tools": "^9.10.0",
+    "firebase": "9.0.0-beta.6",
+    "firebase-tools": "^9.16.0",
     "globalthis": "^1.0.1",
     "husky": "^4.3.0",
     "jest-environment-jsdom": "^26.6.2",
@@ -98,12 +98,13 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "rxfire": "5.0.0-rc.1",
+    "rxfire": "6.0.0-canary.d3cbd88",
     "rxjs": "^6.6.3 || ^7.0.1"
   },
   "resolutions": {
     "tsdx/**/jest": "^26.6.3",
     "tsdx/**/ts-jest": "^26.5.5",
+    "tsdx/**/prettier": "^2.2.1",
     "tsdx/**/typescript": "^4.2.4"
   }
 }

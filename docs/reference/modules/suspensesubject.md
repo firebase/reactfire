@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [SuspenseSubject](../classes/suspensesubject.suspensesubject-1.md)
+- [SuspenseSubject](../classes/SuspenseSubject.SuspenseSubject-1.md)

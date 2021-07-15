@@ -14,21 +14,21 @@
 
 ### Constructors
 
-- [constructor](index.reactfireerror.md#constructor)
+- [constructor](index.ReactFireError.md#constructor)
 
 ### Properties
 
-- [code](index.reactfireerror.md#code)
-- [customData](index.reactfireerror.md#customdata)
-- [message](index.reactfireerror.md#message)
-- [name](index.reactfireerror.md#name)
-- [stack](index.reactfireerror.md#stack)
-- [prepareStackTrace](index.reactfireerror.md#preparestacktrace)
-- [stackTraceLimit](index.reactfireerror.md#stacktracelimit)
+- [code](index.ReactFireError.md#code)
+- [customData](index.ReactFireError.md#customdata)
+- [message](index.ReactFireError.md#message)
+- [name](index.ReactFireError.md#name)
+- [stack](index.ReactFireError.md#stack)
+- [prepareStackTrace](index.ReactFireError.md#preparestacktrace)
+- [stackTraceLimit](index.ReactFireError.md#stacktracelimit)
 
 ### Methods
 
-- [captureStackTrace](index.reactfireerror.md#capturestacktrace)
+- [captureStackTrace](index.ReactFireError.md#capturestacktrace)
 
 ## Constructors
 
@@ -50,7 +50,7 @@ Error.constructor
 
 #### Defined in
 
-[src/index.ts:11](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L11)
+[src/index.ts:15](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L15)
 
 ## Properties
 
@@ -90,7 +90,7 @@ Error.name
 
 #### Defined in
 
-[src/index.ts:11](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L11)
+[src/index.ts:13](https://github.com/FirebaseExtended/reactfire/blob/main/src/index.ts#L13)
 
 ___
 

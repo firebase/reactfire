@@ -1,53 +1,46 @@
-import firebase from 'firebase/app';
-import { collectionData, doc, docData, fromCollectionRef } from 'rxfire/firestore';
-import { preloadFirestore, ReactFireOptions, useObservable, checkIdField, ReactFireGlobals } from './';
+import { collectionData, doc, docData, fromRef } from 'rxfire/firestore';
+import { ReactFireOptions, useObservable, checkIdField, ReactFireGlobals } from './';
 import { preloadObservable, ObservableStatus } from './useObservable';
 import { first } from 'rxjs/operators';
 
-// Since we're side-effect free, we need to ensure our observableId cache is global
-const cachedQueries: Array<firebase.firestore.Query> = ((globalThis as any) as ReactFireGlobals)._reactFireFirestoreQueryCache || [];
+import { Query as FirestoreQuery, QuerySnapshot, DocumentReference, queryEqual, DocumentData, DocumentSnapshot } from 'firebase/firestore';
 
-if (!((globalThis as any) as ReactFireGlobals)._reactFireFirestoreQueryCache) {
-  ((globalThis as any) as ReactFireGlobals)._reactFireFirestoreQueryCache = cachedQueries;
+// Since we're side-effect free, we need to ensure our observableId cache is global
+const cachedQueries: Array<FirestoreQuery> = (globalThis as any as ReactFireGlobals)._reactFireFirestoreQueryCache || [];
+
+if (!(globalThis as any as ReactFireGlobals)._reactFireFirestoreQueryCache) {
+  (globalThis as any as ReactFireGlobals)._reactFireFirestoreQueryCache = cachedQueries;
 }
 
-function getUniqueIdForFirestoreQuery(query: firebase.firestore.Query) {
-  const index = cachedQueries.findIndex(cachedQuery => cachedQuery.isEqual(query));
+function getUniqueIdForFirestoreQuery(query: FirestoreQuery) {
+  const index = cachedQueries.findIndex((cachedQuery) => queryEqual(cachedQuery, query));
   if (index > -1) {
     return index;
   }
   return cachedQueries.push(query) - 1;
 }
 
-// starts a request for a firestore doc.
-// imports the firestore SDK automatically
-// if it hasn't been imported yet.
-//
-// there's a decent chance this gets called before the Firestore SDK
-// has been imported, so it takes a refProvider instead of a ref
-export function preloadFirestoreDoc(
-  refProvider: (firestore: firebase.firestore.Firestore) => firebase.firestore.DocumentReference,
-  options: { firebaseApp: firebase.app.App }
-) {
-  const firebaseApp = options.firebaseApp;
+/**
+ * Preload a subscription to a Firestore document reference.
+ *
+ * Use this to warm up `useFirestoreDoc` for a specific document
+ */
+export async function preloadFirestoreDoc(refProvider: () => Promise<DocumentReference>) {
+  const ref = await refProvider();
+  return preloadObservable(doc(ref), getDocObservableId(ref));
+}
 
-  return preloadFirestore({ firebaseApp }).then(firestore => {
-    const ref = refProvider(firestore());
-    return preloadObservable(doc(ref), `firestore:doc:${firebaseApp.name}:${ref.path}`);
-  });
+function getDocObservableId(ref: DocumentReference) {
+  return `firestore:doc:${ref.firestore.app.name}:${ref.path}`;
 }
 
 /**
  * Suscribe to Firestore Document changes
  *
- * @param ref - Reference to the document you want to listen to
- * @param options
+ * You can preload data for this hook by calling `preloadFirestoreDoc`
  */
-export function useFirestoreDoc<T = firebase.firestore.DocumentData>(
-  ref: firebase.firestore.DocumentReference,
-  options?: ReactFireOptions<T>
-): ObservableStatus<firebase.firestore.DocumentSnapshot<T>> {
-  const observableId = `firestore:doc:${ref.firestore.app.name}:${ref.path}`;
+export function useFirestoreDoc<T = DocumentData>(ref: DocumentReference<T>, options?: ReactFireOptions<T>): ObservableStatus<DocumentSnapshot<T>> {
+  const observableId = getDocObservableId(ref);
   const observable$ = doc(ref);
 
   return useObservable(observableId, observable$, options);
@@ -55,14 +48,8 @@ export function useFirestoreDoc<T = firebase.firestore.DocumentData>(
 
 /**
  * Get a firestore document and don't subscribe to changes
- *
- * @param ref - Reference to the document you want to get
- * @param options
  */
-export function useFirestoreDocOnce<T = unknown>(
-  ref: firebase.firestore.DocumentReference,
-  options?: ReactFireOptions<T>
-): ObservableStatus<T extends {} ? T : firebase.firestore.DocumentSnapshot> {
+export function useFirestoreDocOnce<T = DocumentData>(ref: DocumentReference<T>, options?: ReactFireOptions<T>): ObservableStatus<DocumentSnapshot<T>> {
   const observableId = `firestore:docOnce:${ref.firestore.app.name}:${ref.path}`;
   const observable$ = doc(ref).pipe(first());
 
@@ -70,12 +57,9 @@ export function useFirestoreDocOnce<T = unknown>(
 }
 
 /**
- * Suscribe to Firestore Document changes
- *
- * @param ref - Reference to the document you want to listen to
- * @param options
+ * Suscribe to Firestore Document changes and unwrap the document into a plain object
  */
-export function useFirestoreDocData<T>(ref: firebase.firestore.DocumentReference, options?: ReactFireOptions<T>): ObservableStatus<T> {
+export function useFirestoreDocData<T = unknown>(ref: DocumentReference<T>, options?: ReactFireOptions<T>): ObservableStatus<T> {
   const idField = options ? checkIdField(options) : 'NO_ID_FIELD';
 
   const observableId = `firestore:docData:${ref.firestore.app.name}:${ref.path}:idField=${idField}`;
@@ -85,12 +69,9 @@ export function useFirestoreDocData<T>(ref: firebase.firestore.DocumentReference
 }
 
 /**
- * Get a firestore document and don't subscribe to changes
- *
- * @param ref - Reference to the document you want to get
- * @param options
+ * Get a Firestore document, unwrap the document into a plain object, and don't subscribe to changes
  */
-export function useFirestoreDocDataOnce<T = unknown>(ref: firebase.firestore.DocumentReference, options?: ReactFireOptions<T>): ObservableStatus<T> {
+export function useFirestoreDocDataOnce<T = unknown>(ref: DocumentReference<T>, options?: ReactFireOptions<T>): ObservableStatus<T> {
   const idField = options ? checkIdField(options) : 'NO_ID_FIELD';
 
   const observableId = `firestore:docDataOnce:${ref.firestore.app.name}:${ref.path}:idField=${idField}`;
@@ -101,30 +82,18 @@ export function useFirestoreDocDataOnce<T = unknown>(ref: firebase.firestore.Doc
 
 /**
  * Subscribe to a Firestore collection
- *
- * @param ref - Reference to the collection you want to listen to
- * @param options
  */
-export function useFirestoreCollection<T = firebase.firestore.DocumentData>(
-  query: firebase.firestore.Query,
-  options?: ReactFireOptions<T[]>
-): ObservableStatus<firebase.firestore.QuerySnapshot<T>> {
+export function useFirestoreCollection<T = DocumentData>(query: FirestoreQuery<T>, options?: ReactFireOptions<T[]>): ObservableStatus<QuerySnapshot<T>> {
   const observableId = `firestore:collection:${getUniqueIdForFirestoreQuery(query)}`;
-  const observable$ = fromCollectionRef(query);
+  const observable$ = fromRef(query);
 
   return useObservable(observableId, observable$, options);
 }
 
 /**
- * Subscribe to a Firestore collection and unwrap the snapshot.
- *
- * @param ref - Reference to the collection you want to listen to
- * @param options
+ * Subscribe to a Firestore collection and unwrap the snapshot into an array.
  */
-export function useFirestoreCollectionData<T = { [key: string]: unknown }>(
-  query: firebase.firestore.Query,
-  options?: ReactFireOptions<T[]>
-): ObservableStatus<T[]> {
+export function useFirestoreCollectionData<T = DocumentData>(query: FirestoreQuery<T>, options?: ReactFireOptions<T[]>): ObservableStatus<T[]> {
   const idField = options ? checkIdField(options) : 'NO_ID_FIELD';
   const observableId = `firestore:collectionData:${getUniqueIdForFirestoreQuery(query)}:idField=${idField}`;
   const observable$ = collectionData(query, idField);

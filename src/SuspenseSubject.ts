@@ -17,18 +17,18 @@ export class SuspenseSubject<T> extends Subject<T> {
 
   constructor(innerObservable: Observable<T>, private _timeoutWindow: number) {
     super();
-    this._firstEmission = new Promise<void>(resolve => (this._resolveFirstEmission = resolve));
+    this._firstEmission = new Promise<void>((resolve) => (this._resolveFirstEmission = resolve));
     this._innerObservable = innerObservable.pipe(
       tap({
-        next: v => {
+        next: (v) => {
           this._next(v);
         },
-        error: e => {
+        error: (e) => {
           // save the error, so that we can raise on subscription or .value
           // resolve the promise, so suspense tries again
           this._error = e;
           this._resolveFirstEmission();
-        }
+        },
       }),
       catchError(() => empty()),
       shareReplay(1)
@@ -76,7 +76,7 @@ export class SuspenseSubject<T> extends Subject<T> {
     this._hasValue = false;
     this._value = undefined;
     this._error = undefined;
-    this._firstEmission = new Promise<void>(resolve => (this._resolveFirstEmission = resolve));
+    this._firstEmission = new Promise<void>((resolve) => (this._resolveFirstEmission = resolve));
   }
 
   _subscribe(subscriber: Subscriber<T>): Subscription {

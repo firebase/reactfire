@@ -14,7 +14,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `claims` | `Object` |
+| `claims` | `ParsedToken` |
 
 #### Returns
 
@@ -22,9 +22,9 @@
 
 | Name | Type |
 | :------ | :------ |
-| `errors` | {} \| [`ClaimCheckErrors`](auth.claimcheckerrors.md) |
+| `errors` | {} \| [`ClaimCheckErrors`](auth.ClaimCheckErrors.md) |
 | `hasRequiredClaims` | `boolean` |
 
 #### Defined in
 
-[src/auth.tsx:93](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L93)
+[src/auth.tsx:89](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L89)

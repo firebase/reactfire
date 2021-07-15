@@ -12,8 +12,8 @@ class MyEnvironment extends BrowserEnvironment {
         globals: Object.assign({}, config.globals, {
           Uint32Array: Uint32Array,
           Uint8Array: Uint8Array,
-          ArrayBuffer: ArrayBuffer
-        })
+          ArrayBuffer: ArrayBuffer,
+        }),
       })
     );
   }

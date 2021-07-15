@@ -5,5 +5,5 @@ export const baseConfig = {
   projectId: 'rxfire-525a3',
   storageBucket: 'rxfire-525a3.appspot.com',
   messagingSenderId: '844180061847',
-  appId: '1:844180061847:web:400f7142e2d1aaeb'
+  appId: '1:844180061847:web:400f7142e2d1aaeb',
 };

@@ -26,3 +26,4 @@ publish.sh
 unpack.sh
 
 example/.parcel-cache/
+.firebaserc

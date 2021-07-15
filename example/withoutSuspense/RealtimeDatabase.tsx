@@ -1,7 +1,7 @@
 import 'firebase/database';
+import { getDatabase, ref, runTransaction, query, orderByChild, push, set } from 'firebase/database';
 import * as React from 'react';
-import { useState } from 'react';
-import { useDatabase, useDatabaseListData, useDatabaseObjectData, useUser } from 'reactfire';
+import { DatabaseProvider, useDatabase, useDatabaseListData, useDatabaseObjectData, useFirebaseApp, useUser } from 'reactfire';
 import { WideButton } from '../display/Button';
 import { CardSection } from '../display/Card';
 import { LoadingSpinner } from '../display/LoadingSpinner';
@@ -9,14 +9,14 @@ import { AuthWrapper } from './Auth';
 
 const Counter = () => {
   const database = useDatabase();
-  const ref = database.ref('counter');
+  const counterRef = ref(database, 'counter');
   const increment = amountToIncrement => {
-    ref.transaction(counterVal => {
+    runTransaction(counterRef, counterVal => {
       return counterVal + amountToIncrement;
     });
   };
 
-  const response = useDatabaseObjectData(ref);
+  const response = useDatabaseObjectData(counterRef);
 
   const { status, data: count } = response;
   if (status === 'loading') {
@@ -34,8 +34,8 @@ const Counter = () => {
 
 const AnimalsList = () => {
   const database = useDatabase();
-  const animalsRef = database.ref('animals');
-  const animalsQuery = animalsRef.orderByChild('commonName');
+  const animalsRef = ref(database, 'animals');
+  const animalsQuery = query(animalsRef, orderByChild('commonName'));
   const { status, data: animals } = useDatabaseListData(animalsQuery, {
     idField: 'id'
   });
@@ -43,14 +43,16 @@ const AnimalsList = () => {
   const addAnimal = () => {
     const possibleAnimals = ['Dog', 'Cat', 'Iguana', 'Zebra'];
     const selectedAnimal = possibleAnimals[Math.floor(Math.random() * possibleAnimals.length)];
-    const newRef = animalsRef.push();
-    newRef.set({ commonName: selectedAnimal });
+    const newRef = push(animalsRef);
+    set(newRef, { commonName: selectedAnimal });
   };
 
   if (status === 'loading') {
     return <LoadingSpinner />;
+  } else if (!animals) {
+    return <span>no animals found</span>
   }
-
+  
   return (
     <>
       <div className="h-20 overflow-x-scroll shadow-inner m-2 border border-black">
@@ -71,8 +73,11 @@ const AnimalsList = () => {
 };
 
 export const RealtimeDatabase = () => {
+  const firebaseApp = useFirebaseApp();
+  const database = getDatabase(firebaseApp);
+
   return (
-    <>
+    <DatabaseProvider sdk={database}>
       <AuthWrapper fallback={<span>Sign in to use this component</span>}>
         <CardSection title="Get/Set object value">
           <Counter />
@@ -81,6 +86,6 @@ export const RealtimeDatabase = () => {
           <AnimalsList />
         </CardSection>
       </AuthWrapper>
-    </>
+    </DatabaseProvider>
   );
 };

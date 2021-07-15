@@ -1,8 +1,8 @@
-[ReactFire reference docs](../README.md) / [SuspenseSubject](../modules/suspensesubject.md) / SuspenseSubject
+[ReactFire reference docs](../README.md) / [SuspenseSubject](../modules/SuspenseSubject.md) / SuspenseSubject
 
 # Class: SuspenseSubject<T\>
 
-[SuspenseSubject](../modules/suspensesubject.md).SuspenseSubject
+[SuspenseSubject](../modules/SuspenseSubject.md).SuspenseSubject
 
 ## Type parameters
 
@@ -20,51 +20,51 @@
 
 ### Constructors
 
-- [constructor](suspensesubject.suspensesubject-1.md#constructor)
+- [constructor](SuspenseSubject.SuspenseSubject-1.md#constructor)
 
 ### Properties
 
-- [\_error](suspensesubject.suspensesubject-1.md#_error)
-- [\_firstEmission](suspensesubject.suspensesubject-1.md#_firstemission)
-- [\_hasValue](suspensesubject.suspensesubject-1.md#_hasvalue)
-- [\_innerObservable](suspensesubject.suspensesubject-1.md#_innerobservable)
-- [\_innerSubscriber](suspensesubject.suspensesubject-1.md#_innersubscriber)
-- [\_resolveFirstEmission](suspensesubject.suspensesubject-1.md#_resolvefirstemission)
-- [\_timeoutHandler](suspensesubject.suspensesubject-1.md#_timeouthandler)
-- [\_value](suspensesubject.suspensesubject-1.md#_value)
-- [\_warmupSubscription](suspensesubject.suspensesubject-1.md#_warmupsubscription)
-- [closed](suspensesubject.suspensesubject-1.md#closed)
-- [hasError](suspensesubject.suspensesubject-1.md#haserror)
-- [isStopped](suspensesubject.suspensesubject-1.md#isstopped)
-- [observers](suspensesubject.suspensesubject-1.md#observers)
-- [operator](suspensesubject.suspensesubject-1.md#operator)
-- [source](suspensesubject.suspensesubject-1.md#source)
-- [thrownError](suspensesubject.suspensesubject-1.md#thrownerror)
-- [create](suspensesubject.suspensesubject-1.md#create)
+- [\_error](SuspenseSubject.SuspenseSubject-1.md#_error)
+- [\_firstEmission](SuspenseSubject.SuspenseSubject-1.md#_firstemission)
+- [\_hasValue](SuspenseSubject.SuspenseSubject-1.md#_hasvalue)
+- [\_innerObservable](SuspenseSubject.SuspenseSubject-1.md#_innerobservable)
+- [\_innerSubscriber](SuspenseSubject.SuspenseSubject-1.md#_innersubscriber)
+- [\_resolveFirstEmission](SuspenseSubject.SuspenseSubject-1.md#_resolvefirstemission)
+- [\_timeoutHandler](SuspenseSubject.SuspenseSubject-1.md#_timeouthandler)
+- [\_value](SuspenseSubject.SuspenseSubject-1.md#_value)
+- [\_warmupSubscription](SuspenseSubject.SuspenseSubject-1.md#_warmupsubscription)
+- [closed](SuspenseSubject.SuspenseSubject-1.md#closed)
+- [hasError](SuspenseSubject.SuspenseSubject-1.md#haserror)
+- [isStopped](SuspenseSubject.SuspenseSubject-1.md#isstopped)
+- [observers](SuspenseSubject.SuspenseSubject-1.md#observers)
+- [operator](SuspenseSubject.SuspenseSubject-1.md#operator)
+- [source](SuspenseSubject.SuspenseSubject-1.md#source)
+- [thrownError](SuspenseSubject.SuspenseSubject-1.md#thrownerror)
+- [create](SuspenseSubject.SuspenseSubject-1.md#create)
 
 ### Accessors
 
-- [firstEmission](suspensesubject.suspensesubject-1.md#firstemission)
-- [hasValue](suspensesubject.suspensesubject-1.md#hasvalue)
-- [observed](suspensesubject.suspensesubject-1.md#observed)
-- [ourError](suspensesubject.suspensesubject-1.md#ourerror)
-- [value](suspensesubject.suspensesubject-1.md#value)
+- [firstEmission](SuspenseSubject.SuspenseSubject-1.md#firstemission)
+- [hasValue](SuspenseSubject.SuspenseSubject-1.md#hasvalue)
+- [observed](SuspenseSubject.SuspenseSubject-1.md#observed)
+- [ourError](SuspenseSubject.SuspenseSubject-1.md#ourerror)
+- [value](SuspenseSubject.SuspenseSubject-1.md#value)
 
 ### Methods
 
-- [\_next](suspensesubject.suspensesubject-1.md#_next)
-- [\_reset](suspensesubject.suspensesubject-1.md#_reset)
-- [\_subscribe](suspensesubject.suspensesubject-1.md#_subscribe)
-- [asObservable](suspensesubject.suspensesubject-1.md#asobservable)
-- [complete](suspensesubject.suspensesubject-1.md#complete)
-- [error](suspensesubject.suspensesubject-1.md#error)
-- [forEach](suspensesubject.suspensesubject-1.md#foreach)
-- [lift](suspensesubject.suspensesubject-1.md#lift)
-- [next](suspensesubject.suspensesubject-1.md#next)
-- [pipe](suspensesubject.suspensesubject-1.md#pipe)
-- [subscribe](suspensesubject.suspensesubject-1.md#subscribe)
-- [toPromise](suspensesubject.suspensesubject-1.md#topromise)
-- [unsubscribe](suspensesubject.suspensesubject-1.md#unsubscribe)
+- [\_next](SuspenseSubject.SuspenseSubject-1.md#_next)
+- [\_reset](SuspenseSubject.SuspenseSubject-1.md#_reset)
+- [\_subscribe](SuspenseSubject.SuspenseSubject-1.md#_subscribe)
+- [asObservable](SuspenseSubject.SuspenseSubject-1.md#asobservable)
+- [complete](SuspenseSubject.SuspenseSubject-1.md#complete)
+- [error](SuspenseSubject.SuspenseSubject-1.md#error)
+- [forEach](SuspenseSubject.SuspenseSubject-1.md#foreach)
+- [lift](SuspenseSubject.SuspenseSubject-1.md#lift)
+- [next](SuspenseSubject.SuspenseSubject-1.md#next)
+- [pipe](SuspenseSubject.SuspenseSubject-1.md#pipe)
+- [subscribe](SuspenseSubject.SuspenseSubject-1.md#subscribe)
+- [toPromise](SuspenseSubject.SuspenseSubject-1.md#topromise)
+- [unsubscribe](SuspenseSubject.SuspenseSubject-1.md#unsubscribe)
 
 ## Constructors
 
@@ -91,7 +91,7 @@ Subject&lt;T\&gt;.constructor
 
 #### Defined in
 
-[src/SuspenseSubject.ts:16](https://github.com/FirebaseExtended/reactfire/blob/main/src/SuspenseSubject.ts#L16)
+[src/SuspenseSubject.ts:18](https://github.com/FirebaseExtended/reactfire/blob/main/src/SuspenseSubject.ts#L18)
 
 ## Properties
 
@@ -307,11 +307,21 @@ ___
 
 ▪ `Static` **create**: (...`args`: `any`[]) => `any`
 
+Creates a "subject" by basically gluing an observer to an observable.
+
+**`nocollapse`**
+
+**`deprecated`** Recommended you do not use. Will be removed at some point in the future. Plans for replacement still under discussion.
+
 #### Type declaration
 
 ▸ (...`args`): `any`
 
 Creates a "subject" by basically gluing an observer to an observable.
+
+**`nocollapse`**
+
+**`deprecated`** Recommended you do not use. Will be removed at some point in the future. Plans for replacement still under discussion.
 
 ##### Parameters
 

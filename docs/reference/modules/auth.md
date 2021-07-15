@@ -6,13 +6,13 @@
 
 ### Interfaces
 
-- [AuthCheckProps](../interfaces/auth.authcheckprops.md)
-- [ClaimCheckErrors](../interfaces/auth.claimcheckerrors.md)
-- [ClaimsCheckProps](../interfaces/auth.claimscheckprops.md)
-- [ClaimsValidator](../interfaces/auth.claimsvalidator.md)
-- [SignInCheckOptionsBasic](../interfaces/auth.signincheckoptionsbasic.md)
-- [SignInCheckOptionsClaimsObject](../interfaces/auth.signincheckoptionsclaimsobject.md)
-- [SignInCheckOptionsClaimsValidator](../interfaces/auth.signincheckoptionsclaimsvalidator.md)
+- [AuthCheckProps](../interfaces/auth.AuthCheckProps.md)
+- [ClaimCheckErrors](../interfaces/auth.ClaimCheckErrors.md)
+- [ClaimsCheckProps](../interfaces/auth.ClaimsCheckProps.md)
+- [ClaimsValidator](../interfaces/auth.ClaimsValidator.md)
+- [SignInCheckOptionsBasic](../interfaces/auth.SignInCheckOptionsBasic.md)
+- [SignInCheckOptionsClaimsObject](../interfaces/auth.SignInCheckOptionsClaimsObject.md)
+- [SignInCheckOptionsClaimsValidator](../interfaces/auth.SignInCheckOptionsClaimsValidator.md)
 
 ### Type aliases
 
@@ -31,11 +31,11 @@
 
 ### SigninCheckResult
 
-Ƭ **SigninCheckResult**: { `errors`: {} ; `hasRequiredClaims`: ``false`` ; `signedIn`: ``false`` ; `user`: ``null``  } \| { `errors`: [`ClaimCheckErrors`](../interfaces/auth.claimcheckerrors.md) ; `hasRequiredClaims`: `boolean` ; `signedIn`: ``true`` ; `user`: `firebase.User`  }
+Ƭ **SigninCheckResult**: { `errors`: {} ; `hasRequiredClaims`: ``false`` ; `signedIn`: ``false`` ; `user`: ``null``  } \| { `errors`: [`ClaimCheckErrors`](../interfaces/auth.ClaimCheckErrors.md) ; `hasRequiredClaims`: `boolean` ; `signedIn`: ``true`` ; `user`: `User`  }
 
 #### Defined in
 
-[src/auth.tsx:71](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L71)
+[src/auth.tsx:66](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L66)
 
 ## Functions
 
@@ -53,7 +53,7 @@ Meant for Concurrent mode only (`<FirebaseAppProvider suspense=true />`). [More 
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`AuthCheckProps`](../interfaces/auth.authcheckprops.md) |
+| `__namedParameters` | [`AuthCheckProps`](../interfaces/auth.AuthCheckProps.md) |
 
 #### Returns
 
@@ -61,7 +61,7 @@ Meant for Concurrent mode only (`<FirebaseAppProvider suspense=true />`). [More 
 
 #### Defined in
 
-[src/auth.tsx:248](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L248)
+[src/auth.tsx:247](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L247)
 
 ___
 
@@ -79,7 +79,7 @@ Meant for Concurrent mode only (`<FirebaseAppProvider suspense=true />`). [More 
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`ClaimsCheckProps`](../interfaces/auth.claimscheckprops.md) |
+| `__namedParameters` | [`ClaimsCheckProps`](../interfaces/auth.ClaimsCheckProps.md) |
 
 #### Returns
 
@@ -87,20 +87,19 @@ Meant for Concurrent mode only (`<FirebaseAppProvider suspense=true />`). [More 
 
 #### Defined in
 
-[src/auth.tsx:211](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L211)
+[src/auth.tsx:210](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L210)
 
 ___
 
 ### preloadUser
 
-▸ **preloadUser**(`options`): `Promise`<`undefined` \| ``null`` \| `User`\>
+▸ **preloadUser**(`authResolver`): `Promise`<`undefined` \| ``null`` \| `User`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Object` |
-| `options.firebaseApp` | `firebase.app.App` |
+| `authResolver` | () => `Promise`<`Auth`\> |
 
 #### Returns
 
@@ -108,35 +107,35 @@ ___
 
 #### Defined in
 
-[src/auth.tsx:9](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L9)
+[src/auth.tsx:11](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L11)
 
 ___
 
 ### useIdTokenResult
 
-▸ **useIdTokenResult**(`user`, `forceRefresh?`, `options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.auth.IdTokenResult`\>
+▸ **useIdTokenResult**(`user`, `forceRefresh?`, `options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`IdTokenResult`\>
 
 #### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `user` | `firebase.User` | `undefined` |
+| `user` | `User` | `undefined` |
 | `forceRefresh` | `boolean` | `false` |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`firebase.auth.IdTokenResult`\> | `undefined` |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`IdTokenResult`\> | `undefined` |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.auth.IdTokenResult`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`IdTokenResult`\>
 
 #### Defined in
 
-[src/auth.tsx:39](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L39)
+[src/auth.tsx:38](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L38)
 
 ___
 
 ### useSigninCheck
 
-▸ **useSigninCheck**(`options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<[`SigninCheckResult`](auth.md#signincheckresult)\>
+▸ **useSigninCheck**(`options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<[`SigninCheckResult`](auth.md#signincheckresult)\>
 
 Subscribe to the signed-in status of a user.
 
@@ -172,21 +171,21 @@ const {status, data: signInCheckResult} = useSignInCheck({forceRefresh: true, re
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [`SignInCheckOptionsBasic`](../interfaces/auth.signincheckoptionsbasic.md) \| [`SignInCheckOptionsClaimsObject`](../interfaces/auth.signincheckoptionsclaimsobject.md) \| [`SignInCheckOptionsClaimsValidator`](../interfaces/auth.signincheckoptionsclaimsvalidator.md) |
+| `options?` | [`SignInCheckOptionsBasic`](../interfaces/auth.SignInCheckOptionsBasic.md) \| [`SignInCheckOptionsClaimsObject`](../interfaces/auth.SignInCheckOptionsClaimsObject.md) \| [`SignInCheckOptionsClaimsValidator`](../interfaces/auth.SignInCheckOptionsClaimsValidator.md) |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<[`SigninCheckResult`](auth.md#signincheckresult)\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<[`SigninCheckResult`](auth.md#signincheckresult)\>
 
 #### Defined in
 
-[src/auth.tsx:136](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L136)
+[src/auth.tsx:131](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L131)
 
 ___
 
 ### useUser
 
-▸ **useUser**<`T`\>(`options?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.User`\>
+▸ **useUser**<`T`\>(`options?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`User` \| ``null``\>
 
 Subscribe to Firebase auth state changes, including token refresh
 
@@ -200,12 +199,12 @@ Subscribe to Firebase auth state changes, including token refresh
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md)<`T`\> |
+| `options?` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md)<`T`\> |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`firebase.User`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`User` \| ``null``\>
 
 #### Defined in
 
-[src/auth.tsx:23](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L23)
+[src/auth.tsx:22](https://github.com/FirebaseExtended/reactfire/blob/main/src/auth.tsx#L22)

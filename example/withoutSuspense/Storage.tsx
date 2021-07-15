@@ -1,19 +1,22 @@
 import 'firebase/storage';
 import * as React from 'react';
 import { useState } from 'react';
-import { useStorage, useStorageDownloadURL, useStorageTask } from 'reactfire';
+import { StorageProvider, useFirebaseApp, useStorage, useStorageDownloadURL, useStorageTask } from 'reactfire';
 import { CardSection } from '../display/Card';
 import { LoadingSpinner } from '../display/LoadingSpinner';
 import { AuthWrapper } from './Auth';
+import {ref, uploadBytesResumable, getStorage} from 'firebase/storage';
+
+import type {UploadTaskSnapshot, UploadTask, StorageReference} from 'firebase/storage';
 
 const UploadProgress = ({ uploadTask, storageRef }) => {
-  const { status, data: uploadProgress } = useStorageTask(uploadTask, storageRef);
+  const { status, data: uploadProgress } = useStorageTask<UploadTaskSnapshot>(uploadTask, storageRef);
 
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
 
-  const { bytesTransferred, totalBytes } = uploadProgress as firebase.storage.UploadTaskSnapshot;
+  const { bytesTransferred, totalBytes } = uploadProgress;
 
   const percentComplete = Math.round(100 * (bytesTransferred / totalBytes)) + '%';
   console.log(`Uploading image: ${percentComplete} complete`);
@@ -21,17 +24,17 @@ const UploadProgress = ({ uploadTask, storageRef }) => {
 };
 
 const ImageUploadButton = props => {
-  const [uploadTask, setUploadTask] = useState<firebase.storage.UploadTask | undefined>(undefined);
-  const [ref, setRef] = useState<firebase.storage.Reference | undefined>(undefined);
+  const [uploadTask, setUploadTask] = useState<UploadTask | undefined>(undefined);
+  const [imageRef, setRef] = useState<StorageReference | undefined>(undefined);
   const storage = useStorage();
   const onChange = event => {
     const fileList = event.target.files;
     const fileToUpload = fileList[0];
     const fileName = fileToUpload.name;
-    const newRef = storage.ref('images').child(fileName);
+    const newRef = ref(storage, `images/${fileName}`);
     setRef(newRef);
 
-    const uploadTask = newRef.put(fileToUpload);
+    const uploadTask = uploadBytesResumable(newRef, fileToUpload);
 
     uploadTask.then(() => {
       console.log('upload complete');
@@ -43,7 +46,7 @@ const ImageUploadButton = props => {
   return (
     <>
       <input type="file" accept="image/png, image/jpeg" onChange={onChange} />
-      {uploadTask ? <UploadProgress uploadTask={uploadTask} storageRef={ref} /> : 'Start an upload to view progress'}
+      {uploadTask ? <UploadProgress uploadTask={uploadTask} storageRef={imageRef} /> : 'Start an upload to view progress'}
     </>
   );
 };
@@ -51,7 +54,7 @@ const ImageUploadButton = props => {
 const FetchImage = ({ storagePath }) => {
   const storage = useStorage();
 
-  const { status, data: imageURL } = useStorageDownloadURL(storage.ref(storagePath));
+  const { status, data: imageURL } = useStorageDownloadURL(ref(storage, storagePath));
   if (status === 'loading') {
     return <LoadingSpinner />;
   }
@@ -60,14 +63,17 @@ const FetchImage = ({ storagePath }) => {
 };
 
 export function Storage() {
+  const app = useFirebaseApp();
   return (
     <AuthWrapper fallback={<span>Sign in to use this component</span>}>
+      <StorageProvider sdk={getStorage(app)}>
       <CardSection title="Fetch image">
         <FetchImage storagePath="Cloud Storage for Firebase (Independent Icon).png" />
       </CardSection>
       <CardSection title="Upload image">
         <ImageUploadButton />
       </CardSection>
+      </StorageProvider>
     </AuthWrapper>
   );
 }

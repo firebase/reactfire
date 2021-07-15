@@ -1,8 +1,8 @@
-[ReactFire reference docs](../README.md) / [useObservable](../modules/useobservable.md) / ObservableStatus
+[ReactFire reference docs](../README.md) / [useObservable](../modules/useObservable.md) / ObservableStatus
 
 # Interface: ObservableStatus<T\>
 
-[useObservable](../modules/useobservable.md).ObservableStatus
+[useObservable](../modules/useObservable.md).ObservableStatus
 
 ## Type parameters
 
@@ -14,12 +14,12 @@
 
 ### Properties
 
-- [data](useobservable.observablestatus.md#data)
-- [error](useobservable.observablestatus.md#error)
-- [firstValuePromise](useobservable.observablestatus.md#firstvaluepromise)
-- [hasEmitted](useobservable.observablestatus.md#hasemitted)
-- [isComplete](useobservable.observablestatus.md#iscomplete)
-- [status](useobservable.observablestatus.md#status)
+- [data](useObservable.ObservableStatus.md#data)
+- [error](useObservable.ObservableStatus.md#error)
+- [firstValuePromise](useObservable.ObservableStatus.md#firstvaluepromise)
+- [hasEmitted](useObservable.ObservableStatus.md#hasemitted)
+- [isComplete](useObservable.ObservableStatus.md#iscomplete)
+- [status](useObservable.ObservableStatus.md#status)
 
 ## Properties
 

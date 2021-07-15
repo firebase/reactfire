@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": false,
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ES2017",
+    "module": "es6",
     "jsx": "react",
     "moduleResolution": "node",
     "noImplicitAny": false,
@@ -18,8 +18,6 @@
     "paths": {
       "react": ["../node_modules/react"],
       "react-dom": ["../node_modules/react-dom/profiling"],
-      "react/experimental": ["../node_modules/react"],
-      "scheduler/tracing": ["../node_modules/scheduler/tracing-profiling"],
       "reactfire": ["../."]
     }
   }

@@ -6,18 +6,18 @@
 
 ### Interfaces
 
-- [ObservableStatus](../interfaces/useobservable.observablestatus.md)
+- [ObservableStatus](../interfaces/useObservable.ObservableStatus.md)
 
 ### Functions
 
-- [preloadObservable](useobservable.md#preloadobservable)
-- [useObservable](useobservable.md#useobservable)
+- [preloadObservable](useObservable.md#preloadobservable)
+- [useObservable](useObservable.md#useobservable)
 
 ## Functions
 
 ### preloadObservable
 
-▸ **preloadObservable**<`T`\>(`source`, `id`): [`SuspenseSubject`](../classes/suspensesubject.suspensesubject-1.md)<`T`\>
+▸ **preloadObservable**<`T`\>(`source`, `id`): [`SuspenseSubject`](../classes/SuspenseSubject.SuspenseSubject-1.md)<`T`\>
 
 #### Type parameters
 
@@ -34,7 +34,7 @@
 
 #### Returns
 
-[`SuspenseSubject`](../classes/suspensesubject.suspensesubject-1.md)<`T`\>
+[`SuspenseSubject`](../classes/SuspenseSubject.SuspenseSubject-1.md)<`T`\>
 
 #### Defined in
 
@@ -44,25 +44,25 @@ ___
 
 ### useObservable
 
-▸ **useObservable**<`T`\>(`observableId`, `source`, `config?`): [`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`\>
+▸ **useObservable**<`T`\>(`observableId`, `source`, `config?`): [`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `observableId` | `string` |
-| `source` | `Observable`<`T` \| `any`\> |
-| `config` | [`ReactFireOptions`](../interfaces/index.reactfireoptions.md) |
+| `source` | `Observable`<`T`\> |
+| `config` | [`ReactFireOptions`](../interfaces/index.ReactFireOptions.md) |
 
 #### Returns
 
-[`ObservableStatus`](../interfaces/useobservable.observablestatus.md)<`T`\>
+[`ObservableStatus`](../interfaces/useObservable.ObservableStatus.md)<`T`\>
 
 #### Defined in
 

@@ -1,18 +1,20 @@
-import firebase from 'firebase/app';
 import * as React from 'react';
 import { getDownloadURL } from 'rxfire/storage';
 import { Observable } from 'rxjs';
-import { ReactFireOptions, useObservable, ObservableStatus } from './';
-import { useStorage, useSuspenseEnabledFromConfigAndContext } from './firebaseApp';
+import { ReactFireOptions, useObservable, ObservableStatus, useStorage } from './';
+import { useSuspenseEnabledFromConfigAndContext } from './firebaseApp';
+import { ref } from 'firebase/storage';
+
+import type { UploadTask, UploadTaskSnapshot, StorageReference, StorageService } from 'firebase/storage';
 
 /**
  * modified version of rxFire's _fromTask
  *
  * @param task
  */
-function _fromTask(task: firebase.storage.UploadTask) {
-  return new Observable<firebase.storage.UploadTaskSnapshot>(subscriber => {
-    const progress = (snap: firebase.storage.UploadTaskSnapshot) => {
+function _fromTask(task: UploadTask) {
+  return new Observable<UploadTaskSnapshot>((subscriber) => {
+    const progress = (snap: UploadTaskSnapshot) => {
       return subscriber.next(snap);
     };
     const error = (e: any) => subscriber.error(e);
@@ -33,11 +35,7 @@ function _fromTask(task: firebase.storage.UploadTask) {
  * @param ref - reference to the blob the task is acting on
  * @param options
  */
-export function useStorageTask<T = unknown>(
-  task: firebase.storage.UploadTask,
-  ref: firebase.storage.Reference,
-  options?: ReactFireOptions<T>
-): ObservableStatus<firebase.storage.UploadTaskSnapshot | T> {
+export function useStorageTask<T = unknown>(task: UploadTask, ref: StorageReference, options?: ReactFireOptions<T>): ObservableStatus<UploadTaskSnapshot | T> {
   const observableId = `storage:task:${ref.toString()}`;
   const observable$ = _fromTask(task);
 
@@ -50,7 +48,7 @@ export function useStorageTask<T = unknown>(
  * @param ref - reference to the blob you want to download
  * @param options
  */
-export function useStorageDownloadURL<T = string>(ref: firebase.storage.Reference, options?: ReactFireOptions<T>): ObservableStatus<string | T> {
+export function useStorageDownloadURL<T = string>(ref: StorageReference, options?: ReactFireOptions<T>): ObservableStatus<string | T> {
   const observableId = `storage:downloadUrl:${ref.toString()}`;
   const observable$ = getDownloadURL(ref);
 
@@ -59,7 +57,7 @@ export function useStorageDownloadURL<T = string>(ref: firebase.storage.Referenc
 
 type StorageImageProps = {
   storagePath: string;
-  storage?: firebase.storage.Storage;
+  storage?: StorageService;
   suspense?: boolean;
   placeHolder?: JSX.Element;
 };
@@ -76,14 +74,14 @@ function INTERNALStorageImage(props: StorageImageProps & React.DetailedHTMLProps
   let { storage, storagePath, suspense, placeHolder, ...imgProps } = props;
 
   const reactfireOptions: ReactFireOptions<string> = {
-    suspense: useSuspenseEnabledFromConfigAndContext(suspense)
+    suspense: useSuspenseEnabledFromConfigAndContext(suspense),
   };
 
   if (!storage) {
     throw new Error('Storage was not passed to component INTERNALStorageImage. This should not be possible');
   }
 
-  const { status, data: imgSrc } = useStorageDownloadURL(storage.ref(storagePath), reactfireOptions);
+  const { status, data: imgSrc } = useStorageDownloadURL(ref(storage, storagePath), reactfireOptions);
 
   if (status === 'success') {
     if (!(imgProps.alt || imgProps.alt === '')) {
