@@ -58,12 +58,14 @@ cd myapp
 > Ignore yarn/npm warnings.
 
 ```bash
-yarn add firebase reactfire
+yarn add firebase reactfire react@experimental react-dom@experimental
 
 # or
 
-npm install --save firebase reactfire
+npm install --save firebase reactfire react@experimental react-dom@experimental
 ```
+
+⚠️ **Status: Experimental**. In order to use the feature of concurrent mode, [an experimental build of React is required](https://reactjs.org/docs/concurrent-mode-adoption.html#installation).
 
 ## 4. Register your app with Firebase
 
@@ -111,7 +113,7 @@ npm install --save firebase reactfire
 
    ```jsx
    //...
-   ReactDOM.createRoot(document.getElementById('root')).render(
+   ReactDOM.unstable_createRoot(document.getElementById('root')).render(
      <FirebaseAppProvider firebaseConfig={firebaseConfig} suspense={true}>
        <App />
      </FirebaseAppProvider>
